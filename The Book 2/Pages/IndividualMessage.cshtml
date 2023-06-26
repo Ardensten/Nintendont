@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using The_Book_2.Areas.Identity.Data;
+
+@model The_Book_2.Pages.IndividualMessageModel
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+@{
+	ViewData["Title"] = "Meddelande";
+
+}
+
+<div class="text-center">
+
+	@foreach (var message in Model.Message)
+	{
+		<table class="table table-fixed">
+
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => message.Text)
+                    </td>
+                    <td>
+                        @foreach (var user in UserManager.Users.Where(u => u.Id == message.SenderId))
+                        {
+                            @if (user.ProfilePictureData != null)
+                            {
+                                <img src="data:@user.ProfilePictureMimeType;base64,@Convert.ToBase64String(user.ProfilePictureData)" />
+                            }
+                            else
+                            {
+                                <img src="/Images/noavatar.png">
+                            }
+                            <br />
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        }
+                        <br>
+                        @Html.DisplayFor(modelItem => message.Date)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Svara</td>
+                </tr>
+            </tbody>
+		</table>
+	}
+
+</div>

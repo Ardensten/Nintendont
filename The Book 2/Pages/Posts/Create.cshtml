@@ -1,0 +1,54 @@
+﻿@page
+@model The_Book_2.Pages.Posts.CreateModel
+@using The_Book_2.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Skapa nytt inlägg i</h1>
+@if (Model.Topic != null)
+{
+    foreach (var topic in Model.Topic.Where(x => x.Id == Model.TopicId))
+    {
+        <h4>@topic.Title</h4>
+    }
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Post.Title" class="control-label"></label>
+                <input asp-for="Post.Title" class="form-control" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Post.Text" class="control-label"></label>
+                <input asp-for="Post.Text" class="form-control" />
+                <span asp-validation-for="Post.Text" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="TopicId" value="@Model.TopicId" />
+
+            <div class="form-group">
+            <br />
+                <input type="submit" value="Skapa inlägg" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="/Topic?id=@Model.TopicId">Gå tillbaka</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

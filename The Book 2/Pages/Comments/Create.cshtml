@@ -1,0 +1,42 @@
+﻿@page
+@model The_Book_2.Pages.Comments.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Svara på tråden</h1>
+@if (Model.Post != null)
+{
+    foreach (var post in Model.Post.Where(x => x.Id == Model.PostId))
+    {
+        <h4>@post.Title</h4>
+    }
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Comment.Text" class="control-label"></label>
+                <input asp-for="Comment.Text" class="form-control" />
+                <span asp-validation-for="Comment.Text" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="PostId" value="@Model.PostId" />
+
+            <div class="form-group">
+                <input type="submit" value="Lämna kommentar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="/Post?id=@Model.PostId">Gå tillbaka</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

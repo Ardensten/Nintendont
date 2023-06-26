@@ -1,0 +1,44 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using The_Book_2.Areas.Identity.Data;
+
+@model The_Book_2.Pages.ForumModel
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+@{
+    ViewData["Title"] = "Forum";
+}
+
+<br />
+    @if (Model.Topic != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Beskrivning</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var topic in Model.Topic.Where(x => x.ForumId == Model.Id))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => topic.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => topic.Description)
+                </td>
+                <td>
+                    <a href="/Topic?id=@topic.Id">Gå in</a>
+                </td>
+            </tr>
+        }
+            </tbody>
+        </table>
+    }
+
+

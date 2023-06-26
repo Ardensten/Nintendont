@@ -1,0 +1,48 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using The_Book_2.Areas.Identity.Data;
+@model IndexModel
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Välkommen till Nintendon't!</h1>
+    <p>Ett webbforum om allt som har och som inte har med Nintendo att göra.</p>
+
+    @if (Model.Forum != null)
+    {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Beskrivning</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+        @foreach (var forum in Model.Forum)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => forum.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => forum.Description)
+                </td>
+                <td>
+                    <a href="/Forum?id=@forum.Id">Gå in</a>
+                </td>
+            </tr>
+        }
+                </tbody>
+            </table>
+    }
+    <br>
+    <br />
+    <img src="/Images/noavatar.png">
+
+</div>

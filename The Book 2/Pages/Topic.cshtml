@@ -1,0 +1,58 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using The_Book_2.Areas.Identity.Data;
+
+@model The_Book_2.Pages.TopicModel
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+
+@{
+    ViewData["Title"] = "Topic";
+}
+
+<div class="text-center">
+    @if (Model.Post != null)
+    {
+                <table class="table">
+            <thead>
+                <tr>
+                    <th>Titel</th>
+                    <th>Text</th>
+                    <th>Datum</th>
+                    <th>Användare</th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var post in Model.Post.Where(x => x.TopicId == Model.TopicId))
+        {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => post.Date)
+                    </td>
+                    <td>
+                            @foreach (var user in UserManager.Users.Where(u => u.Id == post.UserId))
+                            {
+                                @Html.DisplayFor(modelItem => user.UserName)
+                            }
+                    </td>
+                    <td>
+
+                        <a href="/Post?id=@post.Id">Gå in</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+            </table>
+            <a href="/Posts/Create?id=@Model.TopicId">Skapa nytt inlägg</a>
+
+    }
+
+</div>

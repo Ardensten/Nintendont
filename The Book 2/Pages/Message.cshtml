@@ -1,0 +1,47 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using The_Book_2.Areas.Identity.Data;
+
+@model The_Book_2.Pages.MessagesModel
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+@{
+	ViewData["Title"] = "Meddelanden";
+}
+<div class="text-center">
+
+<h1 class="display-4">Meddelanden</h1>
+
+	@if(Model.Message != null)
+	{
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Rubrik</th>
+					<th>Avsändare</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var message in Model.Message.Where(m => m.ReceiverId == Model.UserId))
+				{
+					<tr>
+					<td>
+						@Html.DisplayFor(modelItem => message.Topic)
+					</td>
+					<td>
+						@foreach (var user in UserManager.Users.Where(u => u.Id == message.ReceiverId))
+						{
+							@Html.DisplayFor(modelItem => user.Email)
+						}
+
+					</td>
+					<td>Läs meddelande</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+	</div>

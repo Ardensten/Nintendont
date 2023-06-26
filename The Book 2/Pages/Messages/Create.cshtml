@@ -1,0 +1,59 @@
+﻿@page
+@model The_Book_2.Pages.Messages.CreateModel
+@using The_Book_2.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<The_Book_2User> SignInManager
+@inject UserManager<The_Book_2User> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Svara på meddelandet från</h1>
+@if (Model.Message != null)
+{
+    foreach (var user in UserManager.Users)
+    {
+        <h4>@user.Email</h4>
+    }
+}
+<hr />
+@*<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Message.Topic" class="control-label"></label>
+                <input asp-for="Message.Topic" class="form-control" />
+                <span asp-validation-for="Message.Topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.Text" class="control-label"></label>
+                <input asp-for="Message.Text" class="form-control" />
+                <span asp-validation-for="Message.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.SenderId" class="control-label"></label>
+                <input asp-for="Message.SenderId" class="form-control" />
+                <span asp-validation-for="Message.SenderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message.ReceiverId" class="control-label"></label>
+                <input asp-for="Message.ReceiverId" class="form-control" />
+                <span asp-validation-for="Message.ReceiverId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+*@
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
